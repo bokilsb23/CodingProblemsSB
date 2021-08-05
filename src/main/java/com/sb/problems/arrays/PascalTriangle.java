@@ -4,6 +4,33 @@ import java.util.ArrayList;
 
 
 public class PascalTriangle {
+
+    /**
+     * Returns Kth row in Pascal triangle in O(n) complexity.
+     * Any element in Pascal's triangle is nCr
+     * (combination formula where n is row number and r is element number in row)
+     * @param A - row number in the Pascal Triangle (starting from 0)
+     * @return - kth row from the triangle
+     */
+    private ArrayList<Integer> getKthRowInPascalTriangleOn(int A) {
+        ArrayList<Integer> result = new ArrayList<>();
+
+        for(int i=0; i<=A; i++) {
+            result.add(i,null);
+        }
+        result.set(0,1);
+        result.set(A,1);
+        int num = 1;
+        for(int i=1; i<=A/2; i++) {
+            num=(num*(A-i+1))/i; // num*(A-(i-1))/i
+            result.set(i, num);
+            result.set(A-i, num);
+        }
+
+        return result;
+    }
+
+
     /**
      * Prints Pascal Triangle till row A
      * @param A - Last Row's number
@@ -26,11 +53,14 @@ public class PascalTriangle {
         return outerList;
     }
 
+
+
     /**
      * Returns Kth row in Pascal triangle
      * @param k - row number in the Pascal Triangle (starting from 0)
      * @return - kth row from the triangle
      */
+    @Deprecated
     private ArrayList<Integer> getKthRowInPascalTriangle(int k) {
         ArrayList<Integer> prevList = new ArrayList<>();
         for(int i=0; i<=k; i++) {
@@ -73,11 +103,10 @@ public class PascalTriangle {
     public static void main(String[] args) {
         PascalTriangle pt = new PascalTriangle();
 
-        System.out.println(pt.getKthRowInPascalTriangle(20));
+        //System.out.println(pt.getKthRowInPascalTriangle(20));
+
+        System.out.println(pt.getKthRowInPascalTriangleOn(3));
 
         System.out.println(pt.getKIthElementOfPascalTriangle(8, 9));
-
-
-//        pt.getPascalTriangle(50);
     }
 }
