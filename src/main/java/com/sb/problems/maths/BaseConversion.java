@@ -11,6 +11,7 @@ public class BaseConversion {
         return decValue;
     }
 
+    /*This won't work for any base greater than 10*/
     private int convertToBaseN(int number, int base) {
         int divisionResult = number;
         StringBuilder result= new StringBuilder();
