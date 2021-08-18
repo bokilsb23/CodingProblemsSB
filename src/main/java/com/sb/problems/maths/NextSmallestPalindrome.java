@@ -6,7 +6,7 @@ public class NextSmallestPalindrome {
 
     public static void main(String[] args) {
         NextSmallestPalindrome obj = new NextSmallestPalindrome();
-        /*System.out.println(obj.nextSmallestPalindrome("23589"));//23632
+        System.out.println(obj.nextSmallestPalindrome("23589"));//23632
         System.out.println(obj.nextSmallestPalindrome("91999"));//92029
         System.out.println(obj.nextSmallestPalindrome("11111"));//11211
         System.out.println(obj.nextSmallestPalindrome("93524"));//93539
@@ -20,8 +20,8 @@ public class NextSmallestPalindrome {
         System.out.println(obj.nextSmallestPalindrome("999999"));//1000001
         System.out.println(obj.nextSmallestPalindrome("9999999999"));//1000001
         System.out.println(obj.nextSmallestPalindrome("387427793198650286024"));//387427793202397724783
-        System.out.println(obj.nextSmallestPalindrome("2168576189279543123341"));//2168576189339816758612*/
-        System.out.println(obj.nextSmallestPalindrome("9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999"));//2168576189339816758612
+        System.out.println(obj.nextSmallestPalindrome("2168576189279543123341"));//2168576189339816758612
+        System.out.println(obj.nextSmallestPalindrome("9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999"));
 
 
 
@@ -33,13 +33,16 @@ public class NextSmallestPalindrome {
 
     /**
      * Returns next smallest palindrome number from given number
+     * We traverse number from both sides, comparing corresponding digits
+     * if digit on left is greater than digit on right, we replace right digit with left digit and set carry to false
+     * otherwise we replace right digit with left digit and set carry to true and handle it in next steps
      *
      * @param str - given number
      * @return - next smallest palindrome
      */
     private String nextSmallestPalindrome(String str, boolean isUpdated) {
         String A = str;
-        boolean isLesser = true;
+        boolean carry = true;
         int mid = A.length() / 2;
         for (int i = 0; i <= mid; i++) {
 
@@ -50,30 +53,30 @@ public class NextSmallestPalindrome {
             long charA = Character.getNumericValue(A.charAt(i));
             long charB = Character.getNumericValue(A.charAt(indexOfRightElement));
             if (charA > charB) {
-                isLesser = false;
+                carry = false;
                 A = replaceCharAt(A, A.length() - i - 1, A.charAt(i));
             } else if (charA < charB) {
-                if(indexOfRightElement == i+1 && charA+1 < charB) {
+                if(indexOfRightElement == i+1 && charA+1 < charB) {//if elements are in the mid, and left is less than right, we set both the numbers to value of left+1 (example-2168576189279543123341)
                     char charToReplace = String.valueOf(charA+1).charAt(0);
                     A = replaceCharAt(A, A.length() - i - 1, charToReplace);
                     return replaceCharAt(A, i, charToReplace);
                 }
-                isLesser = true;
+                carry = true;
                 A = replaceCharAt(A, A.length() - i - 1, A.charAt(i));
             }
 
-            if ((i == (A.length() - i - 1) || (i + 1) == ((A.length() - i - 1))) && isLesser) {
+            if ((i == (A.length() - i - 1) || (i + 1) == ((A.length() - i - 1))) && carry) {//handling mid scenario or scenario for even digits with carry
                 if (charA != 9) {
-                    if (A.length() % 2 != 0) {
+                    if (A.length() % 2 != 0) {//odd number of digits increment right digit by left digit + 1
                         char charToReplace = String.valueOf(charA + 1).charAt(0);
                         return replaceCharAt(A, A.length() - i - 1, charToReplace);
-                    } else {
+                    } else {//even number of digits. if left and right digits are not equal, then replace both digits with 0 else replace both digits with (left + 1)
                         char charToReplace = charA != charB ? String.valueOf(charB).charAt(0) : String.valueOf(charA + 1).charAt(0);
 
                         A = replaceCharAt(A, A.length() - i - 1, charToReplace);
                         return replaceCharAt(A, i, charToReplace);
                     }
-                } else {
+                } else {//if next smallest palindrome is not in current degree or mid element is 9 with carry, then find next degree adjusted number which is either palindrome, or it can be used to find next degree palindrome
                     String nextDegreeNumber = getNextDegreeNumber(str);
                     return isPalindrome(new BigInteger(nextDegreeNumber)) ? nextDegreeNumber : nextSmallestPalindrome(nextDegreeNumber, true);
                 }
@@ -98,9 +101,6 @@ public class NextSmallestPalindrome {
                     return replaceCharAt(A, i - 1, String.valueOf(Character.getNumericValue(A.charAt(i - 1) + 1)).charAt(0));
                 }
             }
-            /*else {
-                return replaceCharAt(A, i, String.valueOf(Character.getNumericValue(A.charAt(i))+1).charAt(0));
-            }*/
         }
         return String.valueOf(new BigInteger(str).add(BigInteger.ONE));
     }
