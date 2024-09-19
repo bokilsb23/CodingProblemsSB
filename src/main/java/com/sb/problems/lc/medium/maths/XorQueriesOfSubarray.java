@@ -1,4 +1,4 @@
-package com.sb.problems.maths;
+package com.sb.problems.lc.medium.maths;
 
 
 /*

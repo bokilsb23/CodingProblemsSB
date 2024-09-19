@@ -5,6 +5,32 @@ import java.util.Arrays;
 
 public class MergeSortedArrays {
 
+    //[1,2,3,2,5,6]
+    //[1,2,2,3,5,6]
+    //[1,2,3,0,0,0] [2,5,6] 2,2
+    //[1,2,3,0,0,6] 2,1
+    //[1,2,3,0,5,6] 2,0
+    //[1,2,3,3,5,6] 2,-1
+    //[1,2,2,3,5,6]
+    //[]
+
+    //[1,5,7,9, 2,3,6,8,10]
+    //[1,5,7,9,0,0,0,0,0]
+    //[1,5,7,9,0,0,0,0,10] 3 4 8
+    //[1,5,7,9,0,0,0,9,10] 3 3 7
+    //[1,5,7,9,0,0,8,9,10] 2 3 6
+    //[1,5,7,9,0,7,8,10] 2 2 5
+    //[1,5,7,9,6,7,8,10] 1 2 4
+    //[1,5,7,5,6,7,8,10] 1 1 3
+    //[1,5,3,5,6,7,8,10]
+    //[1,2,3,5,6,7,8,10]
+    //[1,5,7,9, 2,3,6,8,10]
+    //[1,2,7,9, 5,3,6,8,10]
+    //[1,2,5,9 7,3,6,8,10]
+    //[1,2,5,7 9,3,6,8,10]
+    //[1,2,5,7,]
+
+
     public static void main(String[] args) {
         MergeSortedArrays a = new MergeSortedArrays();
         /*ArrayList<Integer> integers = a.mergeSortedArrays(new ArrayList<>(Arrays.asList(1, 3, 5, 6, 18, 21)), new ArrayList<>(Arrays.asList(4, 8, 9, 15)));
@@ -21,9 +47,9 @@ public class MergeSortedArrays {
         int index = 0;
         ArrayList<Integer> tempList = new ArrayList<>();
         double result = 0;
-        if(A.size() == 0) {
+        if(A.isEmpty()) {
             return getMedian(B, B.size(), (B.size()/2)+1);
-        } else if(B.size() == 0) {
+        } else if(B.isEmpty()) {
             return getMedian(A, A.size(), (A.size()/2)+1);
         }
 
@@ -74,10 +100,10 @@ public class MergeSortedArrays {
 
 
     public ArrayList<Integer> mergeSortedArrays(ArrayList<Integer> A, ArrayList<Integer> B) {
-        if(A.size() == 0) {
+        if(A.isEmpty()) {
             return B;
         }
-        if(B.size() == 0){
+        if(B.isEmpty()){
             return A;
         }
         ArrayList<Integer> tempArray = new ArrayList<>();
