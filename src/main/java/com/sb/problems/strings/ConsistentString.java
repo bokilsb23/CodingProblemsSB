@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 public class ConsistentString {
     public int countConsistentStrings(String allowed, String[] words) {
-        return Arrays.stream(words).filter(word -> containsAllChars(word,allowed)).toList().size();
+        return Arrays.stream(words).filter(word -> containsAllChars(word,allowed)).collect(Collectors.toList()).size();
     }
 
     private boolean containsAllChars(String word, String allowed) {
